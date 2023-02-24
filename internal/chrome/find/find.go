@@ -16,13 +16,16 @@ type chromeCookieStoreFile struct {
 	IsDefaultProfile bool
 }
 
-// chromeRoots and chromiumRoots could be put into the github.com/kooky/browser/{chrome,chromium} packages.
-// It might be better though to keep those 2 together here as they are based on the same source.
+// chromeRoots, chromiumRoots and edgeRoots could be put into the github.com/kooky/browser/{chrome,chromium,edge} packages.
+// It might be better though to keep those 3 together here as they are based on the same source.
 func FindChromeCookieStoreFiles() ([]*chromeCookieStoreFile, error) {
 	return FindCookieStoreFiles(chromeRoots, `chrome`)
 }
 func FindChromiumCookieStoreFiles() ([]*chromeCookieStoreFile, error) {
 	return FindCookieStoreFiles(chromiumRoots, `chromium`)
+}
+func FindEdgeChookieStoreFiles() ([]*chromeCookieStoreFile, error) {
+	return FindCookieStoreFiles(edgeRoots, `edge`)
 }
 
 func FindCookieStoreFiles(rootsFunc func() ([]string, error), browserName string) ([]*chromeCookieStoreFile, error) {

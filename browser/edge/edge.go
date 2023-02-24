@@ -6,12 +6,10 @@ package edge
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/zellyn/kooky"
 	"github.com/zellyn/kooky/internal/chrome"
 	"github.com/zellyn/kooky/internal/cookies"
-	"github.com/zellyn/kooky/internal/ie"
 )
 
 func ReadCookies(filename string, filters ...kooky.Filter) ([]*kooky.Cookie, error) {
@@ -45,14 +43,9 @@ func CookieStore(filename string, filters ...kooky.Filter) (kooky.CookieStore, e
 }
 
 func cookieStore(filename string, filters ...kooky.Filter) (*cookies.CookieJar, error) {
-	m := map[string]func(f *os.File, s *ie.CookieStore, browser string){
-		`sqlite`: func(f *os.File, s *ie.CookieStore, browser string) {
-			f.Close()
-			c := &chrome.CookieStore{}
-			c.FileNameStr = filename
-			c.BrowserStr = `edge`
-			s.CookieStore = c
-		},
-	}
-	return ie.GetCookieStore(filename, `edge`, m, filters...)
+	s := &chrome.CookieStore{}
+	s.FileNameStr = filename
+	s.BrowserStr = `edge`
+
+	return &cookies.CookieJar{CookieStore: s}, nil
 }

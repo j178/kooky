@@ -5,7 +5,6 @@ import (
 	"github.com/zellyn/kooky/internal/chrome"
 	"github.com/zellyn/kooky/internal/chrome/find"
 	"github.com/zellyn/kooky/internal/cookies"
-	edgefind "github.com/zellyn/kooky/internal/edge/find"
 )
 
 type edgeFinder struct{}
@@ -17,7 +16,7 @@ func init() {
 }
 
 func (f *edgeFinder) FindCookieStores() ([]kooky.CookieStore, error) {
-	files, err := find.FindCookieStoreFiles(edgefind.GetEdgeRoots(), `edge`)
+	files, err := find.FindEdgeChookieStoreFiles()
 	if err != nil {
 		return nil, err
 	}

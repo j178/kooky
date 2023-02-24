@@ -30,3 +30,17 @@ func chromiumRoots() ([]string, error) {
 	}
 	return []string{filepath.Join(cfgDir, `Chromium`, `User Data`)}, nil
 }
+
+func edgeRoots() ([]string, error) {
+	// AppData Local
+	locApp := os.Getenv(`LocalAppData`)
+	if len(locApp) == 0 {
+		return nil, errors.New(`%LocalAppData% is empty`)
+	}
+
+	var ret = []string{
+		filepath.Join(locApp, `Microsoft`, `Edge`, `User Data`),
+	}
+
+	return ret, nil
+}
