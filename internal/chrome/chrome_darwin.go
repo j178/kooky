@@ -30,6 +30,9 @@ func (s *CookieStore) getKeyringPassword(useSaved bool) ([]byte, error) {
 	case `chrome`:
 		service = `Chrome Safe Storage`
 		account = `Chrome`
+	case `chromium`:
+		service = `Chromium Safe Storage`
+		account = `Chromium`
 	case `edge`:
 		service = `Microsoft Edge Safe Storage`
 		account = `Microsoft Edge`
