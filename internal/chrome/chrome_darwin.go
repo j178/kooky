@@ -25,8 +25,21 @@ func (s *CookieStore) getKeyringPassword(useSaved bool) ([]byte, error) {
 		}
 	}
 
-	// TODO: use s.browser
-	out, err := exec.Command(`/usr/bin/security`, `find-generic-password`, `-s`, `Chrome Safe Storage`, `-wa`, `Chrome`).Output()
+	var service, account string
+	switch s.BrowserStr {
+	case `chrome`:
+		service = `Chrome Safe Storage`
+		account = `Chrome`
+	case `chromium`:
+		service = `Chromium Safe Storage`
+		account = `Chromium`
+	case `edge`:
+		service = `Microsoft Edge Safe Storage`
+		account = `Microsoft Edge`
+	default:
+		return nil, fmt.Errorf(`unknown browser: %s`, s.BrowserStr)
+	}
+	out, err := exec.Command(`/usr/bin/security`, `find-generic-password`, `-s`, service,`-a`, account, `-w`, `Chrome`).Output()
 	if err != nil {
 		return nil, err
 	}

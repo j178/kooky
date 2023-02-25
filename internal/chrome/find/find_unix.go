@@ -56,3 +56,7 @@ func chromiumRoots() ([]string, error) {
 	}
 	return ret, nil
 }
+
+func edgeRoots() ([]string, error) {
+	return nil, errors.New(`not implemented`)
+}

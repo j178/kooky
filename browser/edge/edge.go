@@ -6,12 +6,10 @@ package edge
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/zellyn/kooky"
 	"github.com/zellyn/kooky/internal/chrome"
 	"github.com/zellyn/kooky/internal/cookies"
-	"github.com/zellyn/kooky/internal/ie"
 )
 
 func ReadCookies(filename string, filters ...kooky.Filter) ([]*kooky.Cookie, error) {
@@ -27,7 +25,6 @@ func ReadCookies(filename string, filters ...kooky.Filter) ([]*kooky.Cookie, err
 // CookieJar returns an initiated http.CookieJar based on the cookies stored by
 // the Edge browser. Set cookies are memory stored and do not modify any
 // browser files.
-//
 func CookieJar(filename string, filters ...kooky.Filter) (http.CookieJar, error) {
 	j, err := cookieStore(filename, filters...)
 	if err != nil {
@@ -41,20 +38,14 @@ func CookieJar(filename string, filters ...kooky.Filter) (http.CookieJar, error)
 }
 
 // CookieStore has to be closed with CookieStore.Close() after use.
-//
 func CookieStore(filename string, filters ...kooky.Filter) (kooky.CookieStore, error) {
 	return cookieStore(filename, filters...)
 }
 
 func cookieStore(filename string, filters ...kooky.Filter) (*cookies.CookieJar, error) {
-	m := map[string]func(f *os.File, s *ie.CookieStore, browser string){
-		`sqlite`: func(f *os.File, s *ie.CookieStore, browser string) {
-			f.Close()
-			c := &chrome.CookieStore{}
-			c.FileNameStr = filename
-			c.BrowserStr = `edge`
-			s.CookieStore = c
-		},
-	}
-	return ie.GetCookieStore(filename, `edge`, m, filters...)
+	s := &chrome.CookieStore{}
+	s.FileNameStr = filename
+	s.BrowserStr = `edge`
+
+	return &cookies.CookieJar{CookieStore: s}, nil
 }

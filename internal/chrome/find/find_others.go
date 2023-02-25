@@ -13,3 +13,7 @@ func chromeRoots() ([]string, error) {
 func chromiumRoots() ([]string, error) {
 	return nil, errNotImplemented
 }
+
+func edgeRoots() ([]string, error) {
+	return nil, errNotImplemented
+}
