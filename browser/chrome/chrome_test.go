@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/zellyn/kooky"
-	"github.com/zellyn/kooky/internal/chrome"
-	"github.com/zellyn/kooky/internal/testutils"
+	"github.com/j178/kooky"
+	"github.com/j178/kooky/internal/chrome"
+	"github.com/j178/kooky/internal/testutils"
 )
 
 // d18f6247db68045dfbab126d814baf2cf1512141391

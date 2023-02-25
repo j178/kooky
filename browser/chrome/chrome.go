@@ -3,9 +3,9 @@ package chrome
 import (
 	"net/http"
 
-	"github.com/zellyn/kooky"
-	"github.com/zellyn/kooky/internal/chrome"
-	"github.com/zellyn/kooky/internal/cookies"
+	"github.com/j178/kooky"
+	"github.com/j178/kooky/internal/chrome"
+	"github.com/j178/kooky/internal/cookies"
 )
 
 func ReadCookies(filename string, filters ...kooky.Filter) ([]*kooky.Cookie, error) {

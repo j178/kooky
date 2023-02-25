@@ -1,4 +1,4 @@
-module github.com/zellyn/kooky
+module github.com/j178/kooky
 
 go 1.18
 

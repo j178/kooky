@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/zellyn/kooky"
-	"github.com/zellyn/kooky/internal/cookies"
-	"github.com/zellyn/kooky/internal/timex"
+	"github.com/j178/kooky"
+	"github.com/j178/kooky/internal/cookies"
+	"github.com/j178/kooky/internal/timex"
 )
 
 type TextCookieStore struct {

@@ -3,7 +3,7 @@ package ie
 import (
 	"errors"
 
-	"github.com/zellyn/kooky"
+	"github.com/j178/kooky"
 )
 
 func (s *CookieStore) ReadCookies(filters ...kooky.Filter) ([]*kooky.Cookie, error) {
