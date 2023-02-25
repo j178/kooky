@@ -3,6 +3,7 @@
 package find
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 )
