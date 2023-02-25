@@ -1,4 +1,4 @@
-//+build android
+//go:build android
 
 package find
 

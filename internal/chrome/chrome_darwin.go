@@ -4,6 +4,7 @@ package chrome
 
 import (
 	"errors"
+	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -39,7 +40,15 @@ func (s *CookieStore) getKeyringPassword(useSaved bool) ([]byte, error) {
 	default:
 		return nil, fmt.Errorf(`unknown browser: %s`, s.BrowserStr)
 	}
-	out, err := exec.Command(`/usr/bin/security`, `find-generic-password`, `-s`, service,`-a`, account, `-w`, `Chrome`).Output()
+	out, err := exec.Command(
+		`/usr/bin/security`,
+		`find-generic-password`,
+		`-s`,
+		service,
+		`-a`,
+		account,
+		`-w`,
+	).Output()
 	if err != nil {
 		return nil, err
 	}
