@@ -41,9 +41,9 @@ func RegisterFinder(browser string, finder CookieStoreFinder) {
 	}
 }
 
-// FindAllCookieStores() tries to find cookie stores at default locations.
+// FindCookieStores tries to find cookie stores at default locations.
 //
-// FindAllCookieStores() requires registered CookieStoreFinders.
+// FindCookieStores() requires registered CookieStoreFinders.
 //
 // Register cookie store finders for all browsers like this:
 //
@@ -52,11 +52,26 @@ func RegisterFinder(browser string, finder CookieStoreFinder) {
 // Or only a specific browser:
 //
 //  import _ "github.com/j178/kooky/browser/chrome"
-func FindAllCookieStores() []CookieStore {
+//
+// If browsers is empty, all registered browsers are searched. Otherwise, only
+// the specified browsers are searched.
+func FindCookieStores(browsers ...string) []CookieStore {
 	var ret []CookieStore
 
+
+	browserFinders := map[string]CookieStoreFinder{}
+	if len(browsers) == 0 {
+		browserFinders = finders
+	} else {
+		for _, browser := range browsers {
+			if finder, ok := finders[browser]; ok {
+				browserFinders[browser] = finder
+			}
+		}
+	}
+
 	var wg sync.WaitGroup
-	wg.Add(len(finders))
+	wg.Add(len(browserFinders))
 
 	c := make(chan []CookieStore)
 	done := make(chan struct{})
@@ -70,7 +85,7 @@ func FindAllCookieStores() []CookieStore {
 
 	muFinder.RLock()
 	defer muFinder.RUnlock()
-	for _, finder := range finders {
+	for _, finder := range browserFinders {
 		go func(finder CookieStoreFinder) {
 			defer wg.Done()
 			cookieStores, err := finder.FindCookieStores()
@@ -88,8 +103,8 @@ func FindAllCookieStores() []CookieStore {
 	return ret
 }
 
-// ReadCookies() uses registered cookiestore finders to read cookies.
-// Erronous reads are skipped.
+// ReadCookies uses registered cookiestore finders to read cookies.
+// Erroneous reads are skipped.
 //
 // Register cookie store finders for all browsers like this:
 //
