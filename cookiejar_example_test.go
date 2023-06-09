@@ -13,7 +13,7 @@ import (
 )
 
 func Example_cookieJar() {
-	stores := kooky.FindAllCookieStores()
+	stores := kooky.FindCookieStores()
 	var s kooky.CookieStore
 	for _, store := range stores {
 		if store.Browser() != `firefox` || !store.IsDefaultProfile() {

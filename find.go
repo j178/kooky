@@ -30,7 +30,7 @@ var (
 )
 
 // RegisterFinder() registers CookieStoreFinder enabling automatic finding of
-// cookie stores with FindAllCookieStores() and ReadCookies().
+// cookie stores with FindCookieStores() and ReadCookies().
 //
 // RegisterFinder() is called by init() in the browser subdirectories.
 func RegisterFinder(browser string, finder CookieStoreFinder) {

@@ -76,15 +76,16 @@ func (s *CookieStore) ReadCookies(filters ...kooky.Filter) ([]*kooky.Cookie, err
 			return err
 		}
 
-		if kooky.FilterCookie(cookie, filters...) {
-			cookies = append(cookies, cookie)
+		if !kooky.FilterCookie(cookie, filters...) {
+			return nil
 		}
 
-		for _, cookie := range cookies {
-			if err := getCookieValue(s, cookie, row); err != nil {
-				return err
-			}
+		err = decryptCookieValue(s, cookie, row)
+		if err != nil {
+			return err
 		}
+
+		cookies = append(cookies, cookie)
 		return nil
 	})
 	if err != nil {
@@ -94,16 +95,17 @@ func (s *CookieStore) ReadCookies(filters ...kooky.Filter) ([]*kooky.Cookie, err
 	return cookies, nil
 }
 
-func getCookieValue(s *CookieStore, cookie *kooky.Cookie, row utils.TableRow) error {
+func decryptCookieValue(s *CookieStore, cookie *kooky.Cookie, row utils.TableRow) error {
 	if cookie.Value != "" {
 		return nil
 	}
 
-	encrypted_value, err := row.BytesStringOrFallback(`encrypted_value`, nil)
+	encryptedValue, err := row.BytesStringOrFallback(`encrypted_value`, nil)
 	if err != nil {
 		return err
-	} else if len(encrypted_value) > 0 {
-		if decrypted, err := s.decrypt(encrypted_value); err == nil {
+	}
+	if len(encryptedValue) > 0 {
+		if decrypted, err := s.decrypt(encryptedValue); err == nil {
 			cookie.Value = string(decrypted)
 		} else {
 			return fmt.Errorf("decrypting cookie %v: %w", cookie, err)

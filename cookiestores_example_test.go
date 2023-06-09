@@ -7,8 +7,8 @@ import (
 	_ "github.com/j178/kooky/browser/all" // register cookiestore finders
 )
 
-func ExampleFindAllCookieStores() {
-	cookieStores := kooky.FindAllCookieStores()
+func ExampleFindCookieStores() {
+	cookieStores := kooky.FindCookieStores()
 
 	for _, store := range cookieStores {
 		// CookieStore keeps files/databases open for repeated reads

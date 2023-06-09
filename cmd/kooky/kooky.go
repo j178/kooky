@@ -24,7 +24,7 @@ func main() {
 	export := pflag.StringP(`export`, `o`, ``, `export cookies in netscape format`)
 	pflag.Parse()
 
-	cookieStores := kooky.FindAllCookieStores()
+	cookieStores := kooky.FindCookieStores()
 
 	var cookiesExport []*kooky.Cookie // for netscape export
 
