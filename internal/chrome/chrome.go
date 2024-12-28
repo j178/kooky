@@ -103,10 +103,7 @@ func (s *CookieStore) ReadCookies(filters ...kooky.Filter) ([]*kooky.Cookie, err
 			return nil
 		}
 
-		err = decryptCookieValue(s, cookie, row)
-		if err != nil {
-			return err
-		}
+		_ = decryptCookieValue(s, cookie, row)
 
 		cookies = append(cookies, cookie)
 		return nil
@@ -226,8 +223,6 @@ func (s *CookieStore) decrypt(encrypted []byte) ([]byte, error) {
 				decrypt = func(encrypted, _ []byte, dbVersion int64) ([]byte, error) {
 					return decryptDPAPI(encrypted)
 				}
-			case bytes.HasPrefix(encrypted, []byte(`v10`)):
-				fallthrough
 			default:
 				needsKeyringQuerying = true
 				decrypt = decryptAES256GCM
@@ -310,6 +305,10 @@ func decryptAESCBC(encrypted, password []byte, iterations int, dbVersion int64) 
 
 	// strip "v##"
 	encrypted = encrypted[3:]
+
+	if len(encrypted)%aescbcLength != 0 {
+		return nil, fmt.Errorf("encrypted data block length is not a multiple of %d", aescbcLength)
+	}
 
 	key := pbkdf2.Key(password, []byte(aescbcSalt), iterations, aescbcLength, sha1.New)
 	block, err := aes.NewCipher(key)
