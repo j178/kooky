@@ -9,11 +9,11 @@ require (
 	github.com/go-sqlite/sqlite3 v0.0.0-20180313105335-53dd8e640ee7
 	github.com/keybase/go-keychain v0.0.0-20231219164618-57a3676c3af6
 	github.com/spf13/pflag v1.0.5
-	github.com/zalando/go-keyring v0.2.3
-	golang.org/x/crypto v0.17.0
-	golang.org/x/net v0.19.0
-	golang.org/x/sys v0.15.0
-	golang.org/x/text v0.14.0
+	github.com/zalando/go-keyring v0.2.6
+	golang.org/x/crypto v0.31.0
+	golang.org/x/net v0.33.0
+	golang.org/x/sys v0.28.0
+	golang.org/x/text v0.21.0
 	www.velocidex.com/golang/go-ese v0.2.0
 )
 
