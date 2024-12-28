@@ -103,7 +103,10 @@ func (s *CookieStore) ReadCookies(filters ...kooky.Filter) ([]*kooky.Cookie, err
 			return nil
 		}
 
-		_ = decryptCookieValue(s, cookie, row)
+		err = decryptCookieValue(s, cookie, row)
+		if err != nil {
+			return err
+		}
 
 		cookies = append(cookies, cookie)
 		return nil
