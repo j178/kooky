@@ -226,6 +226,12 @@ func (s *CookieStore) decrypt(encrypted []byte) ([]byte, error) {
 				decrypt = func(encrypted, _ []byte, dbVersion int64) ([]byte, error) {
 					return decryptDPAPI(encrypted)
 				}
+			case bytes.HasPrefix(encrypted, []byte(`v20`)):
+				// Since Chrome 127 on Windows
+				// https://security.googleblog.com/2024/07/improving-security-of-chrome-cookies-on.html
+				// https://docs.google.com/document/d/1tin6IaVqeHHk60aw1Om6mhIIWa3gddbY_ChhYb611Vg/edit?tab=t.0
+				// https://source.chromium.org/chromium/chromium/src/+/main:chrome/elevation_service/elevator.cc
+				return nil, errors.New("Chrome app-bound cookie encryption currently not supported")
 			default:
 				needsKeyringQuerying = true
 				decrypt = decryptAES256GCM

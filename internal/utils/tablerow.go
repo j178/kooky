@@ -12,14 +12,15 @@ type TableRow struct {
 }
 
 func (row TableRow) BytesOrFallback(columnName string, fallback []byte) ([]byte, error) {
-	rawValue := row.ValueOrFallback(columnName, nil)
+	rawValue := row.ValueOrFallback(columnName, fallback)
 	if value, ok := rawValue.([]byte); ok {
 		return value, nil
 	}
 	return nil, fmt.Errorf("expected column [%s] to be []byte; got %T with value %[2]v", columnName, rawValue)
 }
+
 func (row TableRow) BytesStringOrFallback(columnName string, fallback []byte) ([]byte, error) {
-	rawValue := row.ValueOrFallback(columnName, nil)
+	rawValue := row.ValueOrFallback(columnName, fallback)
 	if value, ok := rawValue.([]byte); ok {
 		return value, nil
 	}
