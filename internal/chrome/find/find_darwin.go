@@ -42,3 +42,12 @@ func edgeRoots() ([]string, error) {
 	}
 	return []string{filepath.Join(cfgDir, `Microsoft Edge`)}, nil
 }
+
+func braveRoots() ([]string, error) {
+	// "$HOME/Library/Application Support"
+	cfgDir, err := os.UserConfigDir()
+	if err != nil {
+		return nil, err
+	}
+	return []string{filepath.Join(cfgDir, `BraveSoftware`, `Brave-Browser`)}, nil
+}

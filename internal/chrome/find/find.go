@@ -27,6 +27,9 @@ func FindChromiumCookieStoreFiles() ([]*chromeCookieStoreFile, error) {
 func FindEdgeChookieStoreFiles() ([]*chromeCookieStoreFile, error) {
 	return FindCookieStoreFiles(edgeRoots, `edge`)
 }
+func FindBraveCookieStoreFiles() ([]*chromeCookieStoreFile, error) {
+	return FindCookieStoreFiles(braveRoots, `brave`)
+}
 
 func FindCookieStoreFiles(rootsFunc func() ([]string, error), browserName string) ([]*chromeCookieStoreFile, error) {
 	if rootsFunc == nil {
