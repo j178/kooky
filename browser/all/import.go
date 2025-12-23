@@ -1,6 +1,7 @@
 package all
 
 import (
+	_ "github.com/j178/kooky/browser/brave"
 	_ "github.com/j178/kooky/browser/browsh"
 	_ "github.com/j178/kooky/browser/chrome"
 	_ "github.com/j178/kooky/browser/chromium"

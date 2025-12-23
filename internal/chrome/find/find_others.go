@@ -17,3 +17,7 @@ func chromiumRoots() ([]string, error) {
 func edgeRoots() ([]string, error) {
 	return nil, errNotImplemented
 }
+
+func braveRoots() ([]string, error) {
+	return nil, errNotImplemented
+}

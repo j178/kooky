@@ -19,3 +19,7 @@ func chromiumRoots() ([]string, error) {
 func edgeRoots() ([]string, error) {
 	return nil, errors.New(`not implemented`)
 }
+
+func braveRoots() ([]string, error) {
+	return nil, errors.New(`not implemented`)
+}
